@@ -12,15 +12,11 @@ menu, main_menu, add, Exit, exit
 return
 
 colorpicker:
-    run, resources\colorpicker.exe
+    run, colorpicker.exe
 return
 
 macro:
-    run, resources\macro.exe
-return
-
-test:
-    run, cmd.exe /c C: && powershell -Command "Invoke-WebRequest https://drive.google.com/u/0/uc?id=1iXs_fJLeVNgrDMQLC0ZMyDDInbqHorMm -Outfile resources.zip" && powerShell -Command "Expand-Archive resources.zip -DestinationPath resources"
+    run, macro.exe
 return
 
 exit:
