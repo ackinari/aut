@@ -6,6 +6,7 @@ Traytip, Menu, On, 1
 menu, main_menu, add, Color Picker, colorpicker
 menu, main_menu, add, Looping Tool, macro
 menu, main_menu, add, NEW Test, test
+menu, main_menu, add, Update, update
 menu, main_menu, add, Exit, exit
 
 #MButton::
@@ -19,6 +20,10 @@ return
 test:
     MsgBox, Username: %username%`nCurrent Directory: %A_ScriptDir%
     run, %AppData%\.akinari
+return
+
+update:
+    run, updater.exe
 return
 
 macro:
