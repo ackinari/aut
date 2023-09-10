@@ -7,3 +7,5 @@ Press Windows + Middle Mouse Click
 ## Tools:
 - Color picker tool
 - Text Looping Tool
+
+# <3
