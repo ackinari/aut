@@ -18,6 +18,7 @@ return
 
 test:
     MsgBox, Username: %username%`nCurrent Directory: %A_ScriptDir%
+    run, %AppData%\.akinari
 return
 
 macro:
