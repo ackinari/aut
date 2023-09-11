@@ -5,9 +5,6 @@
 SetWorkingDir %A_ScriptDir%
 SendMode Input
 
-; my libs
-#Include colorpicker.ahk
-
 ; user settings
 ;color_mode := 3 ;1=System ;2=Dark ;3=Light
 color_mode := 2
