@@ -1,6 +1,7 @@
 ﻿#SingleInstance Force
 SetWorkingDir %A_ScriptDir%
 
+sleep 10000
 CheckAndUpdateVersion()
 
 CheckAndUpdateVersion() {

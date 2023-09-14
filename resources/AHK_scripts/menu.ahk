@@ -6,8 +6,7 @@ SetWorkingDir %A_ScriptDir%
 SendMode Input
 
 ; user settings
-;color_mode := 3 ;1=System ;2=Dark ;3=Light
-color_mode := 2
+color_mode := 2 ;1=System ;2=Dark ;3=Light
 contextcolor(color_mode)
 
 ; - - - - - - - - - - - MENU - - - - - - - - - - - - - 
