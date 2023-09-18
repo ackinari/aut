@@ -2,6 +2,12 @@
 ; 	color_picker by aKiNaRi	 ;
 ; ###################################### ;
 
+#SingleInstance Force
+#NoEnv
+#NoTrayIcon
+SendMode Input
+SetBatchLines -1
+
 Gui, 2:Font, s7 bold, MS Sans Serif
 Gui, 2:Add, Text, x8 ycenter vtext, FFFFFF
 
@@ -42,6 +48,5 @@ getColor()
     ToolTip, Color Picked! (%color%)
     Sleep 500
     Tooltip
-    ;ExitApp
-    return
+    ExitApp
 }
