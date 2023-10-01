@@ -1,30 +1,29 @@
-﻿; script settings
+﻿; - - - - - - - - - Script settings - - - - - - - - -
 #SingleInstance Force
 #NoEnv
 ;#NoTrayIcon
 SetWorkingDir %A_ScriptDir%
 SendMode Input
 
-; user settings
+; - - - - - - - - - User settings - - - - - - - - - -
 color_mode := 2 ;1=System ;2=Dark ;3=Light
 contextcolor(color_mode)
 
-; - - - - - - - - - - - MENU - - - - - - - - - - - - - 
-
+; - - - - - - - - - - - Menu - - - - - - - - - - - - -
 menu, main_menu, add, Help, help
 menu, main_menu, default, help
 
 menu, main_menu, add ;; blank line
 
 menu, main_menu, add, Color Picker, colorpicker
-menu, main_menu, add, Looping Tool, macro
+menu, main_menu, add, Looping Tool, loopingTool
+menu, main_menu, add, Auto Clicker, autoClicker
 
 menu, main_menu, add ;; blank line
 
 menu, main_menu, add, Test, test
 menu, main_menu, add, Update, update
 menu, main_menu, add, Settings, settings
-
     menu, settings_menu, add, Color, color
 
 menu, main_menu, add ;; blank line
@@ -32,20 +31,27 @@ menu, main_menu, add ;; blank line
 menu, main_menu, add, Exit, exit
 
 menu, main_menu, add, Settings, :settings_menu
-; - - - - - - - - - - - MENU - - - - - - - - - - - - - 
 
-; Menu HotKey
+; - - - - - - - - - - Menu HotKey - - - - - - - - - -
 #MButton::
     menu, main_menu, show
 return
 
-; Button Functions
+; - - - - - - - - - Menu Functions - - - - - - - - - -
 help:
     msgbox,, %A_ThisMenuItem%, Coming soon!
 return
 
 colorpicker:
-    run, colorpicker.exe
+    run, "..\AHK_scripts\colorpicker.ahk"
+return
+
+loopingTool:
+    run, "..\AHK_scripts\loopingTool.ahk"
+return
+
+autoClicker:
+    run, "..\AHK_scripts\autoClicker.ahk"
 return
 
 test:
@@ -54,15 +60,11 @@ test:
     menu, main_menu, ToggleEnable, update
 return
 
-macro:
-    run, macro.exe
-return
-
 update:
-    run, updater.exe
+    run, "..\AHK_scripts\updater.ahk"
 return
 
-settings:  
+settings:
 return
 
 color:
@@ -76,6 +78,7 @@ exit:
     ExitApp
 return
 
+; - - - - - - - - Other Functions - - - - - - - - - -
 contextcolor(color_mode) 
 {
     static uxtheme := DllCall("GetModuleHandle", "str", "uxtheme", "ptr")
