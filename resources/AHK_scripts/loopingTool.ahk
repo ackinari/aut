@@ -7,18 +7,42 @@ gui, destroy
 gui, +alwaysOnTop +lastFound MinSize400x400 +resize
 gui, font, s8 cBlack, Verdana
 
-gui, add, text, x10 y5, | Start |
-gui, add, edit, x10 y+5 w45 h20 number vMinNumber, 0
+gui Add, Tab3, x0 y0 vTab, String|File
+gui Tab, 1
+    gui, add, text, x10 y30, | Start |
+    gui, add, edit, x10 y+5 w45 h20 number vMinNumberString, 0
 
-gui, add, text, x60 y5, | Final |
-gui, add, edit, x60 y+5 w43 h20 number vMaxNumber, 10
+    gui, add, text, x60 y30, | Final |
+    gui, add, edit, x60 y+5 w43 h20 number vMaxNumberString, 5
 
-gui, add, text, x110 y5, | Replace |
-gui, add, edit, x111 y+5 w60 h20 vReplace, #
+    gui, add, text, x110 y30, | Replace |
+    gui, add, edit, x111 y+5 w60 h20 vReplaceString, #
 
-gui, add, button, x+15 w80 h23 gGenerate, Generate
+    gui, add, button, x+15 y40 w70 h23 ggenerateString, Generate
+    
+    gui, add, edit, x10 y+10 vInputTextString Multi vscroll, repeated # times!
 
-gui, add, edit, x10 y+5 vInputText Multi vscroll, repeated # times!
+gui Tab, 2
+    gui, add, text, x10 y30, |                                        Output                                        |
+    gui, add, button, x10 y+3 w20 h20 gselectFolder, >
+    gui, add, edit, x+5 w340 h20 vOutputFile, C:\Users\%A_UserName%\Downloads
+
+    gui, add, text, x10 y+5, | Start |
+    gui, add, text, x+5, | Final |
+    gui, add, text, x+5, | Replace |
+    gui, add, text, x+5, | Name |
+    gui, add, text, x+5, | Type |
+
+    gui, add, edit, x10 y+3 w45 h20 number vMinNumberFile, 0
+    gui, add, edit, x+8 w43 h20 number vMaxNumberFile, 5
+    gui, add, edit, x+5 w60 h20 vReplaceFile, #
+    gui, add, edit, x+8 w48 h20 vFileName, file_#
+    gui, add, ComboBox, x+8 w50 vFileType Choose1, json|txt
+
+    gui, add, button, x+15 w70 h20 ggenerateFile, Generate
+
+    gui, add, edit, x10 y+10 vInputTextFile Multi vscroll, file number #
+
 gui, Show,, Looping Tool
 return
 
@@ -29,19 +53,46 @@ guiClose:
 return
 
 guiSize:
-    guiControl, move, InputText, % "w" A_GuiWidth-20 "h" A_GuiHeight-65
+    guiControl, move, Tab, % "w" A_GuiWidth "h" A_GuiHeight
+    guiControl, move, InputTextString, % "w" A_GuiWidth-20 "h" A_GuiHeight-90
+    guiControl, move, InputTextFile, % "w" A_GuiWidth-20 "h" A_GuiHeight-130
 return
 
-Generate:
+generateString:
     gui, submit, noHide
     gui, destroy
-    loop, % (MaxNumber - MinNumber + 1)
+    loop, % (MaxNumberString - MinNumberString + 1)
     {
-        _InputText := strReplace(InputText, Replace, A_Index + MinNumber - 1)
+        _InputText := strReplace(InputTextString, ReplaceString, A_Index + MinNumberString - 1)
         OutputText .= _InputText "`n"
     }
     clipboard = %OutputText%
     tooltip, Copiado!
+    sleep 1000
+    tooltip
+exitApp
+
+selectFolder:
+    FileSelectFolder, output, , 1, Selecione a pasta de destino
+    if (output != "")
+        guiControl, text, OutputFile, %output%
+return
+
+generateFile:
+    gui, submit, noHide
+    gui, destroy
+
+    if !FileExist(OutputFile)
+        FileCreateDir, %OutputFile%
+
+
+    loop, % (MaxNumberFile - MinNumberFile + 1)
+    {
+        _InputText := strReplace(InputTextFile, ReplaceFile, A_Index + MinNumberFile - 1)
+        _fileName := strReplace(FileName, ReplaceFile, A_Index + MinNumberFile - 1)
+        FileAppend, %_InputText%, %OutputFile%\%_fileName%.%FileType%
+    }
+    tooltip, Arquivos Criados!
     sleep 1000
     tooltip
 exitApp
