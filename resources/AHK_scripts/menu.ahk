@@ -21,7 +21,7 @@ menu, main_menu, add, Auto Clicker, autoClicker
 
 menu, main_menu, add ;; blank line
 
-menu, main_menu, add, Test, test
+menu, main_menu, add, MCBE Temp, minecraftResources
 menu, main_menu, add, Update, update
 menu, main_menu, add, Settings, settings
     menu, settings_menu, add, Color, color
@@ -54,10 +54,8 @@ autoClicker:
     run, "..\AHK_scripts\autoClicker.ahk"
 return
 
-test:
-    soundbeep
-    menu, main_menu, ToggleCheck, test
-    menu, main_menu, ToggleEnable, update
+minecraftResources:
+    run, "..\AHK_scripts\minecraftResources.ahk"
 return
 
 update:
