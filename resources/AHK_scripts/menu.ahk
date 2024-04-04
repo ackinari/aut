@@ -21,8 +21,9 @@ menu, main_menu, add, Auto Clicker, autoClicker
 
 menu, main_menu, add ;; blank line
 
-menu, main_menu, add, MCBE Temp, minecraftResources
+menu, main_menu, add, Game Maker, gameMaker
 menu, main_menu, add, Update, update
+menu, main_menu, add, Reload, reloadApp
 menu, main_menu, add, Settings, settings
     menu, settings_menu, add, Color, color
 
@@ -54,12 +55,16 @@ autoClicker:
     run, "..\AHK_scripts\autoClicker.ahk"
 return
 
-minecraftResources:
-    run, "..\AHK_scripts\minecraftResources.ahk"
+gameMaker:
+    run, "..\AHK_scripts\gameMaker.ahk"
 return
 
 update:
     run, "..\AHK_scripts\updater.ahk"
+return
+
+reloadApp:
+    reload
 return
 
 settings:
