@@ -10,17 +10,17 @@ gui, font, s8 cBlack, Verdana
 gui Add, Tab3, x0 y0 vTab, String|File
 gui Tab, 1
     gui, add, text, x10 y30, | Start |
-    gui, add, edit, x10 y+5 w45 h20 number vMinNumberString, 0
+    gui, add, edit, x10 y+5 w45 h20 vMinNumberString, 0,5
 
     gui, add, text, x60 y30, | Final |
-    gui, add, edit, x60 y+5 w43 h20 number vMaxNumberString, 5
+    gui, add, edit, x60 y+5 w43 h20 vMaxNumberString, 5,10
 
     gui, add, text, x110 y30, | Replace |
-    gui, add, edit, x111 y+5 w60 h20 vReplaceString, #
+    gui, add, edit, x111 y+5 w60 h20 vReplaceString, #,$
 
     gui, add, button, x+15 y40 w70 h23 ggenerateString, Generate
     
-    gui, add, edit, x10 y+10 vInputTextString Multi vscroll, repeated # times!
+    gui, add, edit, x10 y+10 vInputTextString Multi vscroll, $ repeated # times!
 
 gui Tab, 2
     gui, add, text, x10 y30, |                                        Output                                        |
@@ -61,12 +61,46 @@ return
 generateString:
     gui, submit, noHide
     gui, destroy
-    loop, % (MaxNumberString - MinNumberString + 1)
-    {
-        _InputText := strReplace(InputTextString, ReplaceString, A_Index + MinNumberString - 1)
-        OutputText .= _InputText "`n"
+
+    replacers := []
+    minsArr   := []
+    maxsArr   := []
+
+    Loop, Parse, ReplaceString, % ","
+        replacers.Push(Trim(A_LoopField))
+
+    Loop, Parse, MinNumberString, % ","
+        minsArr.Push(Trim(A_LoopField))
+
+    Loop, Parse, MaxNumberString, % ","
+        maxsArr.Push(Trim(A_LoopField))
+
+    totalIters := 0
+    Loop % replacers.Length() {
+        range := maxsArr[A_Index] - minsArr[A_Index] + 1
+        if (range > totalIters)
+            totalIters := range
     }
-    clipboard = %OutputText%
+
+    OutputText := ""
+    Loop % totalIters {
+        line := InputTextString
+        idx := A_Index
+
+        Loop % replacers.Length() {
+            start := minsArr[A_Index]
+            final := maxsArr[A_Index]
+
+            current := start + (idx - 1)
+            if (current > final)
+                current := final
+
+            line := RegExReplace(line, "\Q" replacers[A_Index] "\E", current, "", 1)
+        }
+        OutputText .= line "`n"
+    }
+
+    clipboard := OutputText
     tooltip, Copiado!
     sleep 1000
     tooltip
